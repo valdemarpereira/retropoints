@@ -9,6 +9,9 @@ public class TeamMember {
     private String username;
     private String email;
 
+    public TeamMember() {
+    }
+
     public String getName() {
         return name;
     }
@@ -31,5 +34,15 @@ public class TeamMember {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public TeamMember(String name, String username, String email) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+    }
+
+    public static TeamMember of(String name, String username, String email){
+        return new TeamMember(name, username, email);
     }
 }

@@ -7,12 +7,31 @@ import java.time.LocalDate;
 
 public class Retropoint {
 
-    @Id private Integer id;
-
+    @Id
+    private Integer id;
     private String retropoint;
     private boolean done;
-    private LocalDate dueDate;
+    private String dueDate;
     private TeamMember teamMember;
+
+    public Retropoint() {
+    }
+
+    public Retropoint(Integer id, String retropoint, boolean done, String dueDate, TeamMember teamMember) {
+        this.id = id;
+        this.retropoint = retropoint;
+        this.done = done;
+        this.dueDate = dueDate;
+        this.teamMember = teamMember;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getRetropoint() {
         return retropoint;
@@ -30,11 +49,11 @@ public class Retropoint {
         this.done = done;
     }
 
-    public LocalDate getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

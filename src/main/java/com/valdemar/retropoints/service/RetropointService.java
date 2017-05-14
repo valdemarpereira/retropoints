@@ -13,7 +13,11 @@ public class RetropointService {
     private RetropointRepository repository;
 
 
-    public void addRetropoint(Retropoint retropoint){
-        repository.save(retropoint);
+    public Retropoint addRetropoint(Retropoint retropoint){
+        return repository.save(retropoint);
+    }
+
+    public Retropoint getRetropoint(Integer id) {
+        return repository.findOne(id);
     }
 }
