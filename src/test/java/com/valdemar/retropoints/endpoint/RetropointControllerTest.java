@@ -86,31 +86,33 @@ public class RetropointControllerTest {
         this.mockMvc.perform(post("/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(testData)))
-                .andExpect(jsonPath("$.retropoint.retropoint").value("Bla"))
-
-        ;
+                .andExpect(jsonPath("$.retropoint.retropoint").value("Bla"));
     }
 
+
+    /*
     @Test
     public void envEndpointNotHidden() throws Exception {
 
-        MvcResult result = this.mockMvc.perform(post("/")
+        MvcResult mvcResult = this.mockMvc.perform(post("/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(testData)))
                 .andReturn();
 
 
-        String content = result.getResponse().getContentAsString();
+        String location = mvcResult.getResponse().getHeader("Location");
 
-        String uri = JsonPath.parse(content).read("$._links.self").toString();
+       // String uri = JsonPath.parse(content).read("$._links.self").toString();
 
 
-        Traverson traverson = new Traverson(new URI(uri), MediaTypes.HAL_JSON);
-//        String greeting = traverson.follow("self").toObject("$.content");
-//        assertThat(greeting).isEqualTo("Hello, World!");
+        Traverson traverson = new Traverson(new URI(location), MediaTypes.HAL_JSON);
+        String greeting = traverson.follow("self").toObject("$.retropoint");
+       // assertThat(greeting).isEqualTo("Hello, World!");
 
         String ds = "dsd";
     }
+*/
+
 
     @Test
     public void shouldRetrieveEntity() throws Exception {
@@ -122,39 +124,13 @@ public class RetropointControllerTest {
                 status().isCreated()).andReturn();
 
         String location = mvcResult.getResponse().getHeader("Location");
-        mockMvc.perform(get(location)).andExpect(status().isOk()).andExpect(
-                jsonPath("$.firstName").value("Frodo")).andExpect(
-                jsonPath("$.lastName").value("Baggins"));
+        mockMvc.perform(get(location)).andExpect(status().isOk())
+                .andExpect(jsonPath("$.retropoint.retropoint").value("Bla"));
     }
 
 
     private String toJson(Object obj) throws JsonProcessingException {
         return mapper.writeValueAsString(obj);
     }
-
-/*
-    protected String json(Object o) throws IOException {
-        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        this.mappingJackson2HttpMessageConverter.write(
-                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
-        return mockHttpOutputMessage.getBodyAsString();
-    }
-*/
-    /*
-     @Test
-    public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
-
-        this.mockMvc.perform(get("/greeting")).andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value("Hello, World!"));
-    }
-
-    @Test
-    public void paramGreetingShouldReturnTailoredMessage() throws Exception {
-
-        this.mockMvc.perform(get("/greeting").param("name", "Spring Community"))
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value("Hello, Spring Community!"));
-    }
-     */
 
 }

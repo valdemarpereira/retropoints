@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 public class RetropointController {
@@ -25,13 +29,26 @@ public class RetropointController {
     public ResponseEntity<?> add(@RequestBody Retropoint input){
         Retropoint retropoint = retropointService.addRetropoint(input);
 
-        return new ResponseEntity<>(new RetropointResource(retropoint), HttpStatus.CREATED);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(retropoint.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public ResponseEntity<?> get(@PathVariable Integer id){
         Retropoint retropoint = retropointService.getRetropoint(id);
         return new ResponseEntity<RetropointResource>(new RetropointResource(retropoint), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/")
+    public ResponseEntity<?> getAll(@RequestParam(value = "sortBy", required = false, defaultValue = "date") SortBy sortBy){
+        List<Retropoint> retropoints = retropointService.getAllRetropoints(sortBy);
+
+
+        return null;
+       // return new ResponseEntity<RetropointResource>(new RetropointResource(retropoint), HttpStatus.OK);
     }
 
 
