@@ -29,6 +29,7 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
